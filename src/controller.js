@@ -1,4 +1,5 @@
 const data = require('./data');
+const uuid = require('uuid');
 
 class Controller {
     async getAllPersons() {
@@ -7,7 +8,7 @@ class Controller {
     async getPerson(id) {
         return new Promise((resolve, reject) => {
 
-            let person = data.find((person) => person.id == id);
+            let person = data.find((person) => person.id === id);
             if (person) {
                 resolve(person);
             } else {
@@ -17,7 +18,7 @@ class Controller {
     }
     async deletePerson(id) {
         return new Promise((resolve, reject) => {
-            let personIndex = data.findIndex((person) => person.id == id);
+            let personIndex = data.findIndex((person) => person.id === id);
             if (personIndex < 0) {
                 reject(`No person with id ${id} found`);
             }
@@ -28,24 +29,22 @@ class Controller {
     async addPerson(person) {
         return new Promise((resolve, reject) => {
             let newPerson = {
-                id: Math.floor(Math.random() * 10),
+                id: uuid.v4(),
                 ...person,
             };
             data.push(newPerson);
             resolve(newPerson);
-            console.log(data);
         });
     }
     async updatePerson(id, personData) {
         return new Promise((resolve, reject) => {
-            let personIndex = data.findIndex((person) => person.id == id);
+            let personIndex = data.findIndex((person) => person.id === id);
             if (personIndex < 0) {
                 reject(`No person with id ${id} found`);
             }
             const updatedPerson = Object.assign({id}, personData);
             data.splice(personIndex, 1, updatedPerson);
             resolve(updatedPerson);
-            console.log('after', data);
         });
     }
 }

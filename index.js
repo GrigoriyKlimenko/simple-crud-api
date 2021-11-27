@@ -16,7 +16,7 @@ const server = http.createServer(async (req, res) => {
         }
 
         //GET person by id
-        else if (req.url.match(/\/person\/([0-9]+)/) && req.method === "GET") {
+        else if (req.url.match(/\/person\/[0-9a-f\-]/) && req.method === "GET") {
             try {
                 const id = req.url.split("/")[2];
                 validateID(id);
@@ -32,7 +32,7 @@ const server = http.createServer(async (req, res) => {
         }
 
         //DELETE person
-        else if (req.url.match(/\/person\/([0-9]+)/) && req.method === "DELETE") {
+        else if (req.url.match(/\/person\/[0-9a-f\-]/) && req.method === "DELETE") {
             try {
                 const id = req.url.split("/")[2];
                 validateID(id);
@@ -46,7 +46,7 @@ const server = http.createServer(async (req, res) => {
         }
 
         // PUT - update person
-        else if (req.url.match(/\/person\/([0-9]+)/) && req.method === "PUT") {
+        else if (req.url.match(/\/person\/[0-9a-f\-]/) && req.method === "PUT") {
             try {
                 const id = req.url.split("/")[2];
                 validateID(id);
