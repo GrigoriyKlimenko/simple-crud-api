@@ -4,25 +4,25 @@ const todos = [
         id: 1,
         name: "Alex",
         age: 22,
-        hobbie: ['fishing', 'fighting'],
+        hobbies: ['fishing', 'fighting'],
     },
     {
         id: 2,
         name: "Marta",
         age: 23,
-        hobbie: ['coocking'],
+        hobbies: ['coocking'],
     },
     {
         id: 3,
         name: "John",
         age: 24,
-        hobbie: ['sport'],
+        hobbies: ['sport'],
     },
     {
         id: 4,
         name: "Boris",
         age: 25,
-        hobbie: ['cars', 'dancing'],
+        hobbies: ['cars', 'dancing'],
     },
 ];
 module.exports = todos;
