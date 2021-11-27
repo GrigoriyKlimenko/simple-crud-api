@@ -9,7 +9,8 @@ function processData(req) {
                 resolve(body);
             });
         } catch (error) {
-            reject(error);
+            reject(new Error('Internal server error'));
+            console.log('Problem with parsing data');
         }
     });
 }
