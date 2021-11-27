@@ -1,5 +1,6 @@
 const http = require("http");
-const PORT = 5000;
+require('dotenv').config({ path: './src/.env' })
+const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(async (req, res) => {
     if (req.url === "/person" && req.method === "GET") {
@@ -9,4 +10,6 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(PORT, () => {});
+server.listen(PORT, () => {
+    console.log(`Server port ${PORT}`);
+});
