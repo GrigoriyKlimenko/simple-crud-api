@@ -36,6 +36,18 @@ class Controller {
             console.log(data);
         });
     }
+    async updatePerson(id, personData) {
+        return new Promise((resolve, reject) => {
+            let personIndex = data.findIndex((person) => person.id == id);
+            if (personIndex < 0) {
+                reject(`No person with id ${id} found`);
+            }
+            const updatedPerson = Object.assign({id}, personData);
+            data.splice(personIndex, 1, updatedPerson);
+            resolve(updatedPerson);
+            console.log('after', data);
+        });
+    }
 }
 
 module.exports = Controller;
