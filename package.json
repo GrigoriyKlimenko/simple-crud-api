@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "",
+    "start:dev": "nodemon ./index.js",
     "test": ""
   },
   "repository": {
@@ -23,5 +23,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "nodemonConfig": {
+    "ignore": ["./src/data.js"],
+    "delay": 2500
   }
 }

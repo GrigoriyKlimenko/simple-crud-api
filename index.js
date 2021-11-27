@@ -16,7 +16,6 @@ const server = http.createServer(async (req, res) => {
         try {
             const id = req.url.split("/")[2];
             const data = await new reqHendler().getPerson(id);
-
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify(data));
         } 
