@@ -28,7 +28,15 @@ const server = http.createServer(async (req, res) => {
 
     //DELETE person
     else if (req.url.match(/\/person\/([0-9]+)/) && req.method === "DELETE") {
-
+        try {
+            const id = req.url.split("/")[2];
+            await new reqHendler().deletePerson(id);
+            res.writeHead(204, { "Content-Type": "application/json" });
+            res.end();
+        } catch (error) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: error }));
+        }
     }
 
     // PUT - update person

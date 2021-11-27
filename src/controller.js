@@ -1,4 +1,4 @@
-const data = require("./data");
+const data = require('./data');
 
 class Controller {
     async getAllPersons() {
@@ -15,5 +15,16 @@ class Controller {
             }
         });
     }
+    async deletePerson(id) {
+        return new Promise((resolve, reject) => {
+            let personIndex = data.findIndex((person) => person.id == id);
+            if (personIndex < 0) {
+                reject(`No person with id ${id} found`);
+            }
+            data.splice(personIndex, 1);
+            resolve(`Person deleted successfully`);
+        });
+    }
 }
+
 module.exports = Controller;

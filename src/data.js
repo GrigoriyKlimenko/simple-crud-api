@@ -1,5 +1,4 @@
-/** Todos List*/
-const todos = [
+const Persons = [
     {
         id: 1,
         name: "Alex",
@@ -23,6 +22,6 @@ const todos = [
         name: "Boris",
         age: 25,
         hobbies: ['cars', 'dancing'],
-    },
+    }
 ];
-module.exports = todos;
+module.exports = Persons;
