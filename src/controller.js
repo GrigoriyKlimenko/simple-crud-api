@@ -25,6 +25,17 @@ class Controller {
             resolve(`Person deleted successfully`);
         });
     }
+    async addPerson(person) {
+        return new Promise((resolve, reject) => {
+            let newPerson = {
+                id: Math.floor(Math.random() * 10),
+                ...person,
+            };
+            data.push(newPerson);
+            resolve(newPerson);
+            console.log(data);
+        });
+    }
 }
 
 module.exports = Controller;

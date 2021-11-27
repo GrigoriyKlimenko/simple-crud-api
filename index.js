@@ -1,7 +1,8 @@
 const http = require('http');
 require('dotenv').config({ path: './src/.env' })
 const PORT = process.env.PORT || 5000;
-const reqHendler = require("./src/controller");
+const reqHendler = require('./src/controller');
+const { processData } = require('./src/processData');
 
 const server = http.createServer(async (req, res) => {
     //GET all persons
@@ -46,9 +47,12 @@ const server = http.createServer(async (req, res) => {
 
     // POST - add person
     else if (req.url === "/person" && req.method === "POST") {
+        let personData = await processData(req);
+        let person = await new reqHendler().addPerson(JSON.parse(personData));
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(person));
+    }
 
-    } 
-    
     //Non-existing endpoint
     else {
         res.writeHead(404, { "Content-Type": "application/json" });

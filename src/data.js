@@ -22,6 +22,6 @@ const Persons = [
         name: "Boris",
         age: 25,
         hobbies: ['cars', 'dancing'],
-    }
+    },
 ];
 module.exports = Persons;
