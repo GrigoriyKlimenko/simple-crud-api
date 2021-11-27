@@ -10,7 +10,7 @@ const server = http.createServer(async (req, res) => {
         const data = await new reqHendler().getAllPersons();
         res.end(JSON.stringify(data));
     }
-    
+
     //GET person by id
     else if (req.url.match(/\/person\/\/([0-9]+)/) && req.method === "GET") {
 
@@ -29,6 +29,12 @@ const server = http.createServer(async (req, res) => {
     // POST - add person
     else if (req.url === "/person" && req.method === "POST") {
 
+    } 
+    
+    //Non-existing endpoint
+    else {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Non-existing endpoint" }));
     }
 
 });
