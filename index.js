@@ -24,10 +24,16 @@ const server = http.createServer(async (req, res) => {
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(data));
             }
-
             catch (error) {
-                res.writeHead(404, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ message: error }));
+                if (error.name === 'IDValidationError') {
+                    res.writeHead(400, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else if (error.name === 'IDExistenceError') {
+                    res.writeHead(404, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else {
+                    throw error;
+                }
             }
         }
 
@@ -40,8 +46,15 @@ const server = http.createServer(async (req, res) => {
                 res.writeHead(204, { "Content-Type": "application/json" });
                 res.end();
             } catch (error) {
-                res.writeHead(404, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ message: error }));
+                if (error.name === 'IDValidationError') {
+                    res.writeHead(400, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else if (error.name === 'IDExistenceError') {
+                    res.writeHead(404, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else {
+                    throw error;
+                }
             }
         }
 
@@ -57,19 +70,36 @@ const server = http.createServer(async (req, res) => {
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(updatedPerson));
             } catch (error) {
-                res.writeHead(404, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ message: error }));
+                if (error.name === 'IDValidationError' || error.name === 'DataValidationError') {
+                    res.writeHead(400, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else if (error.name === 'IDExistenceError') {
+                    res.writeHead(404, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else {
+                    throw error;
+                }
             }
         }
 
         // POST - add person
         else if (req.url === "/person" && req.method === "POST") {
-            const personData = await processData(req);
-            const parcedPersonData = parseData(personData);
-            validatePersonData(parcedPersonData);
-            const person = await new reqHendler().addPerson(parcedPersonData);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify(person));
+            try {
+                const personData = await processData(req);
+                const parcedPersonData = parseData(personData);
+                validatePersonData(parcedPersonData);
+                const person = await new reqHendler().addPerson(parcedPersonData);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify(person));
+            }
+            catch (error) {
+                if (error.name === 'DataValidationError') {
+                    res.writeHead(400, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ message: error.message }));
+                } else {
+                    throw error;
+                }
+            }
         }
 
         //Non-existing endpoint
@@ -79,10 +109,10 @@ const server = http.createServer(async (req, res) => {
         }
     }
     catch (error) {
+        console.log(`Internal server error: ${error.message || error}`);
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: error.message }));
     }
-
 });
 
 server.listen(PORT, () => {

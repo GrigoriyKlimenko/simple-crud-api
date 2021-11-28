@@ -1,5 +1,6 @@
 const data = require('./data');
 const uuid = require('uuid');
+const { IDExistenceError } = require('./customErrors');
 
 class Controller {
     async getAllPersons() {
@@ -12,7 +13,7 @@ class Controller {
             if (person) {
                 resolve(person);
             } else {
-                reject(`Person with id ${id} not found `);
+                reject(new IDExistenceError(id));
             }
         });
     }
@@ -20,7 +21,7 @@ class Controller {
         return new Promise((resolve, reject) => {
             let personIndex = data.findIndex((person) => person.id === id);
             if (personIndex < 0) {
-                reject(`No person with id ${id} found`);
+                reject(new IDExistenceError(id));
             }
             data.splice(personIndex, 1);
             resolve(`Person deleted successfully`);
@@ -40,7 +41,7 @@ class Controller {
         return new Promise((resolve, reject) => {
             let personIndex = data.findIndex((person) => person.id === id);
             if (personIndex < 0) {
-                reject(`No person with id ${id} found`);
+                reject(new IDExistenceError(id));
             }
             const updatedPerson = Object.assign({id}, personData);
             data.splice(personIndex, 1, updatedPerson);
