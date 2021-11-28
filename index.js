@@ -111,7 +111,7 @@ const createdServer = http.createServer(async (req, res) => {
     catch (error) {
         console.log(`Internal server error: ${error.message || error}`);
         res.writeHead(500, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: error.message }));
+        res.end(JSON.stringify({ message: error.message || 'something wrong in server side' }));
     }
 });
 
