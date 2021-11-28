@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon ./index.js",
+    "start:prod": "webpack && node ./public/app.js",
     "test": ""
   },
   "repository": {
@@ -22,10 +23,14 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   },
   "nodemonConfig": {
-    "ignore": ["./src/data.js"],
+    "ignore": [
+      "./src/data.js"
+    ],
     "delay": 2500
   }
 }
