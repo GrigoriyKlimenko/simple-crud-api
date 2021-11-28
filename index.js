@@ -6,7 +6,7 @@ const parseData = require('./src/parseData');
 const { processData } = require('./src/processData');
 const { validateID, validatePersonData } = require('./src/validation');
 
-const server = http.createServer(async (req, res) => {
+const createdServer = http.createServer(async (req, res) => {
     try {
         //GET all persons
         if (req.url === "/person" && req.method === "GET") {
@@ -89,7 +89,7 @@ const server = http.createServer(async (req, res) => {
                 const parcedPersonData = parseData(personData);
                 validatePersonData(parcedPersonData);
                 const person = await new reqHendler().addPerson(parcedPersonData);
-                res.writeHead(200, { "Content-Type": "application/json" });
+                res.writeHead(201, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(person));
             }
             catch (error) {
@@ -115,6 +115,8 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(PORT, () => {
+const server = createdServer.listen(PORT, () => {
     console.log(`Server port ${PORT}`);
 });
+
+module.exports = server;
