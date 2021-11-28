@@ -8,6 +8,7 @@ Path to production bundle: `/public/app.js`
 To start tests write `npm run test`
 
 After starting you can send requsts to http://localhost:3000
+The PORT value is stored in a .env file
 
 API path `/person`:
     * **GET** `/person` or `/person/${personId}` return all persons or person with corresponding `personId`
